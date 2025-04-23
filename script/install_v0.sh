@@ -4,6 +4,19 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+# 检查并安装 unzip
+if ! command -v unzip >/dev/null 2>&1; then
+    echo -e "${GREEN}未检测到 unzip，正在尝试安装...${NC}"
+    if command -v apt >/dev/null 2>&1; then
+        apt update && apt install -y unzip
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y unzip
+    else
+        echo "无法自动安装 unzip，请手动安装后重试。"
+        exit 1
+    fi
+fi
+
 # 下载 nezha-agent.zip
 echo -e "${GREEN}正在下载 nezha-agent.zip...${NC}"
 wget -O nezha-agent.zip https://gh.635635.xyz/https://github.com/johntea11/nezha/releases/download/v0/nezha-agent.zip
