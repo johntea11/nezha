@@ -18,12 +18,6 @@ if ! command -v unzip >/dev/null 2>&1; then
 fi
 
 # 下载 nezha-agent.zip
-#!/bin/bash
-
-# 定义颜色
-GREEN='\033[0;32m'
-NC='\033[0m' # 无颜色
-
 # 判断系统架构
 ARCH=$(uname -m)
 
