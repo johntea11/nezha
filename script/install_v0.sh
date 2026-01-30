@@ -18,12 +18,33 @@ if ! command -v unzip >/dev/null 2>&1; then
 fi
 
 # 下载 nezha-agent.zip
-echo -e "${GREEN}正在下载 nezha-agent.zip...${NC}"
-wget -O nezha-agent.zip https://gh.635635.xyz/https://github.com/johntea11/nezha/releases/download/v0/nezha-agent.zip
+#!/bin/bash
+
+# 定义颜色
+GREEN='\033[0;32m'
+NC='\033[0m' # 无颜色
+
+# 判断系统架构
+ARCH=$(uname -m)
+
+if [ "$ARCH" = "x86_64" ]; then
+    DOWNLOAD_FILE="nezha-agent-amd.zip"
+elif [ "$ARCH" = "aarch64" ] || [[ "$ARCH" =~ "arm" ]]; then
+    DOWNLOAD_FILE="nezha-agent-arm.zip"
+else
+    echo -e "未检测到支持的架构: $ARCH"
+    exit 1
+fi
+
+echo -e "${GREEN}检测到系统架构为: ${ARCH}${NC}"
+echo -e "${GREEN}正在下载 ${DOWNLOAD_FILE}...${NC}"
+
+# 执行下载
+wget -O nezha-agent.zip "https://gh.635635.xyz/https://github.com/johntea11/nezha/releases/download/v0/${DOWNLOAD_FILE}"
 
 # 解压文件
-echo -e "${GREEN}解压 nezha-agent.zip...${NC}"
-unzip -o nezha-agent.zip
+echo -e "${GREEN}解压 nezha-agent...${NC}"
+unzip -o ${DOWNLOAD_FILE}
 
 # 创建目录并移动文件
 echo -e "${GREEN}创建目录并移动文件...${NC}"
